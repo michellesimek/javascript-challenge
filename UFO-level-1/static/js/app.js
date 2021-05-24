@@ -4,11 +4,13 @@ var tableData = data;
 // create a new variable selecting the table body in the html
 let tbody = d3.select("tbody");
 
-// Grab the datetime value from the filter
-let inputField = d3.select("#datetime");
-
-// create a new variable for the filter date button
+// create a new variable for the filter date button and form
 let button = d3.select("#filter-btn");
+let form = d3.select("#form");
+
+// run handleClick function when filter button is clicked
+button.on("click", handleClick);
+form.on("submit",handleClick);
 
 // When the page loads, it needs to display the table
 // use forEach to loop through the dataset and append rows for each element
@@ -16,20 +18,19 @@ function buildTable(data) {
     data.forEach(function(data) {
     let nextrow = tbody.append("tr");
     nextrow.append("td").text(data["datetime"]).style("text-align", "center");
-    nextrow.append("td").text(data["city"]);
-    nextrow.append("td").text(data["state"]);
-    nextrow.append("td").text(data["country"]);
-    nextrow.append("td").text(data["shape"]);
-    nextrow.append("td").text(data["durationMinutes"]);
-    nextrow.append("td").text(data["comments"]);
+    nextrow.append("td").text(data["city"]).style("text-align", "center");
+    nextrow.append("td").text(data["state"]).style("text-align", "center");
+    nextrow.append("td").text(data["country"]).style("text-align", "center");
+    nextrow.append("td").text(data["shape"]).style("text-align", "center");
+    nextrow.append("td").text(data["durationMinutes"]).style("text-align", "center");
+    nextrow.append("td").text(data["comments"]).style("text-align", "center");
 })};
 
 // create a function that is triggered when the button is clicked
 function handleClick() {
 
     // clear/overwrite previous data 
-    list.html("");
-    // var filteredData = tableData;
+    tbody.html("");
 
     // Prevent the page from refreshing
     d3.event.preventDefault();
@@ -41,19 +42,12 @@ function handleClick() {
     let inputValue = inputField.property("value");
 
     // grab all the table data and set to filteredData
-    // if (inputValue) {
-    let filteredData = tableData.filter(tableData => tableData.datetime === inputValue);
-    // };
-    
-    // let filteredData = tableData.filter(function(tbody) {
-    //     if(tableData["datetime"] === inputValue) {
-    //        return true;
-    //     } else {
-    //         return false;
-    //     }
-    // });
+    let filteredData = tableData.filter(data => data.datetime === inputValue);
 
+    // print filteredData in console
     console.log(filteredData);
+
+    // call the buildtable function to build table with filtered data
     buildTable(filteredData);
 };
 
@@ -61,6 +55,3 @@ function handleClick() {
 buildTable(tableData);
 
 
-
-// run handleClick function when filter button is clicked
-button.on("click", handleClick);
