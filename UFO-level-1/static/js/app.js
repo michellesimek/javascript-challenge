@@ -42,7 +42,15 @@ function handleClick() {
     let inputValue = inputField.property("value");
 
     // grab all the table data and set to filteredData
-    let filteredData = tableData.filter(data => data.datetime === inputValue);
+    let filteredData = tableData.filter(function(data) {
+        if (data.datetime === inputValue) {
+            return true
+        } else if (inputValue === "") {
+            return true
+        } else {
+            return false
+        }
+    });
 
     // print filteredData in console
     console.log(filteredData);
@@ -53,5 +61,4 @@ function handleClick() {
 
 // Build the table when the page loads
 buildTable(tableData);
-
 
