@@ -44,11 +44,11 @@ function handleClick() {
     // grab all the table data and set to filteredData
     let filteredData = tableData.filter(function(data) {
         if (data.datetime === inputValue) {
-            return true
+            return true;
         } else if (inputValue === "") {
-            return true
+            return true;
         } else {
-            return false
+            return false;
         }
     });
 
